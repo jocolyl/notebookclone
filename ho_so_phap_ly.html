@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hồ sơ pháp lý · Dự án Chung cư cao tầng kết hợp Thương mại dịch vụ (Dream Home Riverside)</title>
+<style>
+  :root {
+    --bg: #f5f3ee;
+    --bg-2: #ffffff;
+    --border: #e6e2d7;
+    --border-strong: #d6d1c4;
+    --text: #1a1a1a;
+    --text-2: #555;
+    --text-3: #8a8577;
+    --accent: #1D9E75;
+    --warn: #EF9F27;
+    --danger: #E24B4A;
+    --shadow-sm: 0 1px 2px rgba(30,25,15,.04);
+    --shadow-md: 0 6px 24px -12px rgba(30,25,15,.15), 0 2px 6px rgba(30,25,15,.05);
+    --shadow-lg: 0 20px 50px -20px rgba(30,25,15,.25);
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { width: 100%; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+    background-image:
+      radial-gradient(1200px 600px at 10% -10%, rgba(29,158,117,.08), transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, rgba(83,74,183,.06), transparent 60%);
+  }
+
+  .page {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px clamp(16px, 4vw, 56px) 64px;
+  }
+
+  /* ───── HERO ───── */
+  .hero {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: clamp(24px, 4vw, 40px);
+    box-shadow: var(--shadow-md);
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(29,158,117,.05), transparent 50%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 12px; font-weight: 600; color: var(--accent);
+    text-transform: uppercase; letter-spacing: .12em; margin-bottom: 12px;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .hero-eyebrow::before {
+    content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
+  }
+  .hero h1 {
+    font-size: clamp(24px, 3.2vw, 38px);
+    font-weight: 600; line-height: 1.2; letter-spacing: -.02em;
+    color: var(--text); margin-bottom: 14px;
+  }
+  .hero p {
+    font-size: clamp(14px, 1.15vw, 16px); color: var(--text-2);
+    max-width: 900px; line-height: 1.65;
+  }
+
+  .hero-meta {
+    display: flex; flex-wrap: wrap; gap: 18px;
+    margin-top: 22px; padding-top: 22px;
+    border-top: 1px dashed var(--border);
+    font-size: 13px; color: var(--text-3);
+  }
+  .hero-meta-item { display: inline-flex; align-items: center; gap: 6px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+
+  /* ───── STATS ───── */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .stat {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 20px 22px;
+    box-shadow: var(--shadow-sm);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .stat:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .stat-label {
+    font-size: 12px; color: var(--text-3); font-weight: 500;
+    text-transform: uppercase; letter-spacing: .06em; margin-bottom: 10px;
+  }
+  .stat-val {
+    font-size: clamp(26px, 2.6vw, 34px); font-weight: 600;
+    color: var(--text); letter-spacing: -.02em; line-height: 1;
+  }
+  .stat-unit { font-size: 14px; color: var(--text-3); font-weight: 400; margin-left: 4px; }
+
+  .prog {
+    background: #ecebe4;
+    border-radius: 999px; height: 8px; overflow: hidden; margin-bottom: 36px;
+  }
+  .prog-fill {
+    height: 100%; border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent), #2ec08f);
+    transition: width .8s cubic-bezier(.2,.8,.2,1);
+  }
+
+  /* ───── SECTION TITLE ───── */
+  .section-title {
+    display: flex; align-items: baseline; gap: 12px;
+    font-size: 13px; font-weight: 600; color: var(--text-3);
+    text-transform: uppercase; letter-spacing: .1em; margin-bottom: 16px;
+  }
+  .section-title::after {
+    content: ""; flex: 1; height: 1px; background: var(--border);
+  }
+
+  /* ───── GROUP (collapsible) ───── */
+  .group {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 14px;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: box-shadow .2s ease, border-color .2s ease;
+  }
+  .group:hover { border-color: var(--border-strong); }
+  .group[open] { box-shadow: var(--shadow-md); }
+  .group > summary { list-style: none; cursor: pointer; }
+  .group > summary::-webkit-details-marker { display: none; }
+
+  .group-head {
+    display: flex; align-items: center; gap: 18px;
+    padding: 20px 24px;
+    transition: background .15s ease;
+  }
+  .group-head:hover { background: #faf8f2; }
+
+  .group-num {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; flex-shrink: 0;
+    letter-spacing: .02em;
+  }
+  .group-info { flex: 1; min-width: 0; }
+  .group-title {
+    font-size: clamp(15px, 1.3vw, 17px); font-weight: 600;
+    color: var(--text); margin-bottom: 8px; letter-spacing: -.01em;
+  }
+  .group-bar {
+    background: #ecebe4; height: 4px; border-radius: 999px; overflow: hidden;
+    max-width: 260px;
+  }
+  .group-bar-fill {
+    height: 100%; border-radius: 999px;
+    transition: width .6s cubic-bezier(.2,.8,.2,1);
+  }
+  .group-count {
+    display: flex; align-items: baseline; gap: 4px;
+    padding: 6px 14px; background: var(--bg);
+    border-radius: 999px; border: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .group-count-num { font-size: 15px; font-weight: 600; color: var(--text); }
+  .group-count-label { font-size: 12px; color: var(--text-3); }
+  .group-chevron {
+    color: var(--text-3); transition: transform .25s ease;
+    display: flex; flex-shrink: 0;
+  }
+  .group[open] .group-chevron { transform: rotate(180deg); color: var(--text); }
+
+  .group-body {
+    padding: 4px 20px 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 10px;
+    animation: fadeIn .3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ───── DOCUMENT CARD (collapsible) ───── */
+  .doc {
+    background: #fdfcf8;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+    overflow: hidden;
+  }
+  .doc:hover {
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-1px);
+  }
+  .doc[open] {
+    background: var(--bg-2);
+    border-color: var(--text-3);
+    box-shadow: var(--shadow-md);
+  }
+  .doc > summary { list-style: none; cursor: pointer; }
+  .doc > summary::-webkit-details-marker { display: none; }
+
+  .doc-head {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 16px;
+  }
+  .doc-head-main { flex: 1; min-width: 0; }
+  .doc-title {
+    font-size: 14px; font-weight: 600; color: var(--text);
+    line-height: 1.35; margin-bottom: 6px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    letter-spacing: -.01em;
+  }
+  .doc[open] .doc-title { white-space: normal; overflow: visible; }
+  .doc-meta {
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  }
+  .doc-date {
+    font-size: 12px; color: var(--text-3); font-variant-numeric: tabular-nums;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 500;
+    padding: 2px 8px; border-radius: 999px; line-height: 1.5;
+  }
+  .badge-dot { width: 5px; height: 5px; border-radius: 50%; display: inline-block; }
+  .doc-chevron {
+    color: var(--text-3); transition: transform .25s ease;
+    display: flex; flex-shrink: 0; margin-left: auto;
+  }
+  .doc[open] .doc-chevron { transform: rotate(180deg); color: var(--text); }
+
+  .doc-body {
+    padding: 0 16px 16px;
+    animation: fadeIn .25s ease;
+  }
+  .doc-summary {
+    font-size: 13px; color: var(--text-2); line-height: 1.65;
+    padding: 12px 14px; background: var(--bg);
+    border-radius: 8px; border-left: 3px solid var(--border-strong);
+  }
+
+  .empty {
+    grid-column: 1 / -1;
+    font-size: 13px; color: var(--text-3);
+    padding: 24px; text-align: center;
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    border: 1px dashed var(--border-strong);
+  }
+
+  /* ───── FOOTER ───── */
+  .footer {
+    margin-top: 40px; padding-top: 24px;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+    font-size: 12px; color: var(--text-3);
+  }
+
+  /* ───── RESPONSIVE ───── */
+  @media (max-width: 900px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .group-head { padding: 16px 18px; gap: 14px; }
+    .group-num { width: 38px; height: 38px; border-radius: 10px; font-size: 13px; }
+    .group-body { grid-template-columns: 1fr; padding: 4px 14px 18px; }
+    .group-count { padding: 5px 10px; }
+  }
+  @media (max-width: 520px) {
+    .page { padding: 20px 14px 40px; }
+    .stats { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .stat { padding: 14px 16px; }
+    .hero-meta { gap: 12px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <section class="hero">
+    <div class="hero-eyebrow">Hồ sơ pháp lý dự án</div>
+    <h1>Dự án Chung cư cao tầng kết hợp Thương mại dịch vụ (Dream Home Riverside)</h1>
+    <p>Quyết định điều chỉnh đầu tư dự án Chung cư cao tầng kết hợp Thương mại dịch vụ tại Phường 7, Quận 8 Ủy ban nhân dân thành phố Hồ Chí Minh chấp thuận đầu tư dự án Chung cư cao tầng kết hợp Thương mại dịch vụ tại phường 7, quận 8 Văn bản thỏa thuận cấp điện cho dự án khu dân cư Phú Lợi P7 Q8</p>
+    <div class="hero-meta">
+      <span class="hero-meta-item"><span class="dot" style="background:var(--accent)"></span>Đầy đủ: <strong>9</strong></span>
+      <span class="hero-meta-item"><span class="dot" style="background:var(--warn)"></span>Cần bổ sung: <strong>1</strong></span>
+      <span class="hero-meta-item"><span class="dot" style="background:var(--danger)"></span>Còn thiếu: <strong>0</strong></span>
+      <span class="hero-meta-item" style="margin-left:auto">Cập nhật: 22/04/2026 08:23</span>
+    </div>
+  </section>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-label">Tổng tài liệu</div>
+      <div class="stat-val">10<span class="stat-unit">file</span></div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Đã OCR</div>
+      <div class="stat-val">10<span class="stat-unit">file</span></div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Hoàn thiện</div>
+      <div class="stat-val">90<span class="stat-unit">%</span></div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Nhóm pháp lý</div>
+      <div class="stat-val">5<span class="stat-unit">nhóm</span></div>
+    </div>
+  </div>
+
+  <div class="prog"><div class="prog-fill" style="width:90%"></div></div>
+
+  <div class="section-title">Chi tiết theo nhóm · Nhấn để mở rộng</div>
+
+  
+  <details class="group" open>
+    <summary class="group-head">
+      <div class="group-num" style="background:#EAF3DE;color:#3B6D11">01</div>
+      <div class="group-info">
+        <h2 class="group-title">Đất đai & chủ trương đầu tư</h2>
+        <div class="group-bar">
+          <div class="group-bar-fill" style="width:75%;background:#3B6D11"></div>
+        </div>
+      </div>
+      <div class="group-count">
+        <span class="group-count-num">4</span>
+        <span class="group-count-label">file</span>
+      </div>
+      <span class="group-chevron" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </span>
+    </summary>
+    <div class="group-body">
+      
+    <details class="doc">
+      <summary class="doc-head">
+        <div class="doc-head-main">
+          <h3 class="doc-title" title="Quyết định số 724/QĐ-UBND">Quyết định số 724/QĐ-UBND</h3>
+          <div class="doc-meta">
+            <span class="doc-date">04/03/2021</span>
+            <span class="badge" style="background:#EAF3DE;color:#3B6D11"><span class="badge-dot" style="background:#3B6D11"></span>Đầy đủ</span>
+          </div>
+        </div>
+        <span class="doc-chevron" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </span>
+      </summary>
+      <div class="doc-body">
+        <p class="doc-summary">Điều chỉnh nội dung Điểm 6.2, Khoản 6, Điều 1, Quyết định số 5090/QĐ-UBND về chấp thuận đầu tư dự án</p>
+      </div>
+    </details>
+
+    <details class="doc">
+      <summary class="doc-head">
+        <div class="doc-head-main">
+          <h3 class="doc-title" title="Quyết định số 5090/QĐ-UBND">Quyết định số 5090/QĐ-UBND</h3>
+          <div class="doc-meta">
+            <span class="doc-date">28/11/2019</span>
+            <span class="badge" style="background:#FAEEDA;color:#854F0B"><span class="badge-dot" style="background:#854F0B"></span>Cần bổ sung</span>
+          </div>
+        </div>
+        <span class="doc-chevron" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </span>
+      </summary>
+      <div class="doc-body">
+        <p class="doc-summary">Chấp thuận đầu tư dự án Chung cư cao tầng kết hợp Thương mại dịch vụ tại Phường 7, Quận 8</p>
+      </div>
+    </details>
+
+    <details class="doc">
+      <summary class="doc-head">
+        <div class="doc-head-main">
+          <h3 class="doc-title" title="Quyết định số 5D90 /QĐ-UBND">Quyết định số 5D90 /QĐ-UBND</h3>
+          <div class="doc-meta">
+            <span class="doc-date">23/11/2019</span>
+            <span class="badge" style="background:#EAF3DE;color:#3B6D11"><span class="badge-dot" style="background:#3B6D11"></span>Đầy đủ</span>
+          </div>
+        </div>
+        <span class="doc-chevron" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </span>
+      </summary>
+      <div class="doc-body">
+        <p class="doc-summary">Chấp thuận đầu tư dự án Chung cư cao tầng kết hợp Thương mại dịch vụ tại phường 7, quận 8</p>
+      </div>
+    </details>
+
+    <details class="doc">
+      <summary class="doc-head">
+        <div class="doc-head-main">
+          <h3 class="doc-title" title="Quyết định số 7213/QĐ-UBND">Quyết định số 7213/QĐ-UBND</h3>
+          <div class="doc-meta">
+            <span class="doc-date">27/11/2015</span>
+            <span class="badge" style="background:#EAF3DE;color:#3B6D11"><span class="badge-dot" style="background:#3B6D11"></span>Đầy đủ</span>
+          </div>
+        </div>
+        <span class="doc-chevron" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </span>
+      </summary>
+      <div class="doc-body">
+        <p class="doc-summary">Phê duyệt điều chỉnh đồ án quy hoạch chi tiết tỷ lệ 1/500 tại khu dân cư Phú Lợi, Quận 8</p>
+      </div>
+    </details>
+    </div>
+  </details>
+
+  <details class="group" open>
+    <summary class="group-head">
+      <div class="group-num" style="background:#E6F1FB;color:#185FA5">02</div>
+      <div class="group-info">
+        <h2 class="group-title">Quy hoạch kiến trúc</h2>
+        <div class="group-bar">
+          <div class="group-bar-fill" style="width:100%;background:#185FA5"></div>
+        </div>
+      </div>
+      <div class="group-count">
+        <span class="group-count-num">3</span>
+        <span class="group-count-label">file</span>
+      </div>
+      <span class="group-chevron" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </span>
+    </summary>
+    <div class="group-body">
+      
+    <details class="doc">
+      <summary class="doc-head">
+        <div class="doc-head-main">
+          <h3 class="doc-title" title="Quyết định số 7213/QĐ-UBND">Quyết định số 7213/QĐ-UBND</h3>
+          <div class="doc-meta">
+            <span class="doc-date">27/11/2015</span>
+            <span class="badge" style="background:#EAF3DE;color:#3B6D11"><span class="badge-dot" style="background:#3B6D11"></span>Đầy đủ</span>
+          </div>
+        </div>
+        <span class="doc-chevron" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </span>
+      </summary>
+      <div class="doc-body">
+        <p class="doc-summary">Phê duyệt đồ án điều chỉnh quy hoạch chi tiết tỷ lệ 1/500 Khu dân cư Phú Lợi tại phường 7, quận 8</p>
+      </div>
+    </details>
+
+    <details class="doc">
+      <summary class="doc-head">
+        <div class="doc-head-main">
+          <h3 class="doc-title" title="Quyết định số 7111/QĐ-UBND">Quyết định số 7111/QĐ-UBND</h3>
+          <div class="doc-meta">
+            <span class="doc-date">20/12/2017</span>
+            <span class="badge" style="background:#EAF3DE;color:#3B6D11"><span class="badge-dot" style="background:#3B6D11"></span>Đầy đủ</span>
+          </div>
+        </div>
+        <span class="doc-chevron" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </span>
+      </summary>
+      <div class="doc-body">
+        <p class="doc-summary">Phê duyệt đồ án điều chỉnh quy hoạch chi tiết tỷ lệ 1/500 Khu dân cư Phú Lợi tại phường 7, quận 8</p>
+      </div>
+    </details>
+
+    <details class="doc">
+      <summary class="doc-head">
+        <div class="doc-head-main">
+          <h3 class="doc-title" title="Giấy phép quy hoạch số 88/GPQH">Giấy phép quy hoạch số 88/GPQH</h3>
+          <div class="doc-meta">
+            <span class="doc-date">18/10/2017</span>
+            <span class="badge" style="background:#EAF3DE;color:#3B6D11"><span class="badge-dot" style="background:#3B6D11"></span>Đầy đủ</span>
+          </div>
+        </div>
+        <span class="doc-chevron" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </span>
+      </summary>
+      <div class="doc-body">
+        <p class="doc-summary">Cấp phép quy hoạch cho dự án chung cư cao tầng kết hợp thương mại - dịch vụ tại khu dân cư Phú Lợi, Quận 8</p>
+      </div>
+    </details>
+    </div>
+  </details>
+
+  <details class="group" open>
+    <summary class="group-head">
+      <div class="group-num" style="background:#FAEEDA;color:#854F0B">03</div>
+      <div class="group-info">
+        <h2 class="group-title">Hạ tầng · PCCC · Môi trường</h2>
+        <div class="group-bar">
+          <div class="group-bar-fill" style="width:100%;background:#854F0B"></div>
+        </div>
+      </div>
+      <div class="group-count">
+        <span class="group-count-num">3</span>
+        <span class="group-count-label">file</span>
+      </div>
+      <span class="group-chevron" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </span>
+    </summary>
+    <div class="group-body">
+      
+    <details class="doc">
+      <summary class="doc-head">
+        <div class="doc-head-main">
+          <h3 class="doc-title" title="Công văn số 1159/TD-PCCC">Công văn số 1159/TD-PCCC</h3>
+          <div class="doc-meta">
+            <span class="doc-date">09/08/2018</span>
+            <span class="badge" style="background:#EAF3DE;color:#3B6D11"><span class="badge-dot" style="background:#3B6D11"></span>Đầy đủ</span>
+          </div>
+        </div>
+        <span class="doc-chevron" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </span>
+      </summary>
+      <div class="doc-body">
+        <p class="doc-summary">Chứng nhận Chung cư cao tầng kết hợp Thương mại dịch vụ đã được thẩm duyệt thiết kế về phòng cháy chữa cháy</p>
+      </div>
+    </details>
+
+    <details class="doc">
+      <summary class="doc-head">
+        <div class="doc-head-main">
+          <h3 class="doc-title" title="Thoả thuận cấp điện">Thoả thuận cấp điện</h3>
+          <div class="doc-meta">
+            <span class="doc-date">03/11/2017</span>
+            <span class="badge" style="background:#EAF3DE;color:#3B6D11"><span class="badge-dot" style="background:#3B6D11"></span>Đầy đủ</span>
+          </div>
+        </div>
+        <span class="doc-chevron" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </span>
+      </summary>
+      <div class="doc-body">
+        <p class="doc-summary">Thoả thuận cấp điện cho TBT XDM (2x1000+4x1200)kVA-22/0,4kV chung cư cao tầng D3 và D4 thuộc dự án khu dân cư Phú Lợi P7 Q8</p>
+      </div>
+    </details>
+
+    <details class="doc">
+      <summary class="doc-head">
+        <div class="doc-head-main">
+          <h3 class="doc-title" title="Văn bản số 515/BQL">Văn bản số 515/BQL</h3>
+          <div class="doc-meta">
+            <span class="doc-date">16/05/2008</span>
+            <span class="badge" style="background:#EAF3DE;color:#3B6D11"><span class="badge-dot" style="background:#3B6D11"></span>Đầy đủ</span>
+          </div>
+        </div>
+        <span class="doc-chevron" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </span>
+      </summary>
+      <div class="doc-body">
+        <p class="doc-summary">Thỏa thuận đấu nối vào đường Nguyễn Văn Linh</p>
+      </div>
+    </details>
+    </div>
+  </details>
+
+  <details class="group">
+    <summary class="group-head">
+      <div class="group-num" style="background:#EEEDFE;color:#534AB7">04</div>
+      <div class="group-info">
+        <h2 class="group-title">Giấy phép xây dựng</h2>
+        <div class="group-bar">
+          <div class="group-bar-fill" style="width:0%;background:#534AB7"></div>
+        </div>
+      </div>
+      <div class="group-count">
+        <span class="group-count-num">0</span>
+        <span class="group-count-label">file</span>
+      </div>
+      <span class="group-chevron" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </span>
+    </summary>
+    <div class="group-body">
+      <div class="empty">Chưa có tài liệu trong nhóm này</div>
+    </div>
+  </details>
+
+  <details class="group">
+    <summary class="group-head">
+      <div class="group-num" style="background:#FAECE7;color:#993C1D">05</div>
+      <div class="group-info">
+        <h2 class="group-title">Điều kiện mở bán & bảo lãnh</h2>
+        <div class="group-bar">
+          <div class="group-bar-fill" style="width:0%;background:#993C1D"></div>
+        </div>
+      </div>
+      <div class="group-count">
+        <span class="group-count-num">0</span>
+        <span class="group-count-label">file</span>
+      </div>
+      <span class="group-chevron" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </span>
+    </summary>
+    <div class="group-body">
+      <div class="empty">Chưa có tài liệu trong nhóm này</div>
+    </div>
+  </details>
+
+  <footer class="footer">
+    <span>Nguồn: Google Drive OCR · Groq AI llama-3.3-70b-versatile</span>
+    <span>Quyết định số 724/QĐ-UBND, Quyết định số 5090/QĐ-UBND, Quyết định số 5D90 /QĐ-UBND...</span>
+  </footer>
+
+</div>
+</body>
+</html>
